@@ -1,11 +1,17 @@
 package dev.bug;
 
+import org.apache.logging.log4j.Logger;
+
+import static dev.bug.common.Log.log;
+
 /**
  * Some class
  */
-class Application {
+public class Application {
+
+    private static final Logger LOG = log(Application.class);
 
     public static void main(final String[] args) {
-        System.out.println("Some text");
+        LOG.info("Start application...");
     }
 }
