@@ -1,17 +1,27 @@
 package dev.bug;
 
-import org.apache.logging.log4j.Logger;
+import dev.bug.persistence.*;
 
-import static dev.bug.common.Log.log;
+import java.util.List;
 
 /**
- * Some class
+ * Main class
  */
 public class Application {
 
-    private static final Logger LOG = log(Application.class);
+    private static final String DB_MIGRATION_V1_20230730 = "db/migration/V1_20230730/";
 
     public static void main(final String[] args) {
-        LOG.info("Start application...");
+        var database = new SQLiteDatabase("test.db");
+
+        database.applyMigrations(false,
+                DB_MIGRATION_V1_20230730 + "create_well_table.sql",
+                DB_MIGRATION_V1_20230730 + "load_well_data.sql",
+                DB_MIGRATION_V1_20230730 + "create_equipment_table.sql",
+                DB_MIGRATION_V1_20230730 + "load_equipment_data.sql"
+        );
+
+        new WellRepository(database);
+        new EquipmentRepository(database);
     }
 }
