@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.bug</groupId>
-    <artifactId>well-equipment</artifactId>
+    <artifactId>wellEntity-equipmentEntity</artifactId>
     <version>1.0</version>
     <url>https://some.dev</url>
     <developers>

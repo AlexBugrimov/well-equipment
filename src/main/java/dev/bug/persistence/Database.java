@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.joining;
 
 public abstract class Database {
 
-    private static final Logger LOG = LogManager.getLogger(SQLiteDatabase.class);
+    private static final Logger LOG = LogManager.getLogger(Database.class);
 
     protected abstract Connection connection();
 
@@ -29,13 +29,13 @@ public abstract class Database {
     }
 
     // TODO: Add migration with version. https://github.com/AlexBugrimov/well-equipment/issues/9
-    public void applyMigrations(boolean isApply, String... filePaths) {
+    public void migrate(boolean isApply, String... filePaths) {
         if (isApply) {
             try (var connection = connection();
                  var statement = connection.createStatement()) {
                 for (var filePath : filePaths) {
                     LOG.debug("Start migration: {}", filePath);
-                    executeSqlFile(statement, filePath);
+                    executeSqlScript(statement, filePath);
                 }
                 LOG.debug("Migrations have been successfully completed");
             } catch (SQLException ex) {
@@ -45,7 +45,7 @@ public abstract class Database {
         }
     }
 
-    private void executeSqlFile(Statement statement, String filePath) throws SQLException {
+    private void executeSqlScript(Statement statement, String filePath) throws SQLException {
         try (var fileReader = new FileReader(filePath);
             var bufferedReader = new BufferedReader(fileReader)) {
             var sqlScript = bufferedReader

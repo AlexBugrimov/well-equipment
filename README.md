@@ -1,4 +1,4 @@
-[![Check Style](https://github.com/AlexBugrimov/well-equipment/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/AlexBugrimov/well-equipment/actions/workflows/checkstyle.yml)
+[![Check Style](https://github.com/AlexBugrimov/wellEntity-equipmentEntity/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/AlexBugrimov/wellEntity-equipmentEntity/actions/workflows/checkstyle.yml)
 
 # Оборудование на скважинах
 
@@ -21,14 +21,14 @@
 
 ```xml
 <dbinfo>
-    <well name="АААА"  id="123">
-        <equipment name="EQ0033" id="12"/>
-        <equipment name="EQ0034" id="13"/>
-    </well>
-    <well name="BBBB"  id="124">
-        <equipment name="EQ0038" id="11"/>
-        <equipment name="EQ0039" id="14"/>
-    </well>
+    <wellEntity name="АААА"  id="123">
+        <equipmentEntity name="EQ0033" id="12"/>
+        <equipmentEntity name="EQ0034" id="13"/>
+    </wellEntity>
+    <wellEntity name="BBBB"  id="124">
+        <equipmentEntity name="EQ0038" id="11"/>
+        <equipmentEntity name="EQ0039" id="14"/>
+    </wellEntity>
 </dbinfo>
 ```
 

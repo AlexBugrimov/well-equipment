@@ -14,7 +14,7 @@ public class Application {
     public static void main(final String[] args) {
         var database = new SQLiteDatabase("test.db");
 
-        database.applyMigrations(false,
+        database.migrate(true,
                 DB_MIGRATION_V1_20230730 + "create_well_table.sql",
                 DB_MIGRATION_V1_20230730 + "load_well_data.sql",
                 DB_MIGRATION_V1_20230730 + "create_equipment_table.sql",

@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WellRepository implements Repository<Integer, Well> {
+public class WellRepository implements Repository<Integer, WellEntity> {
 
     private static final Logger LOG = LogManager.getLogger(WellRepository.class);
 
@@ -20,46 +20,46 @@ public class WellRepository implements Repository<Integer, Well> {
     }
 
     @Override
-    public Well save(Well well) {
+    public WellEntity save(WellEntity wellEntity) {
         return database.execute(connection -> {
             try (PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO well (name) VALUES (?)
                 """, Statement.RETURN_GENERATED_KEYS)) {
                 connection.setAutoCommit(false);
-                statement.setString(1, well.name());
+                statement.setString(1, wellEntity.name());
                 statement.executeUpdate();
                 try (var generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         connection.commit();
-                        return new Well(
+                        return new WellEntity(
                                 generatedKeys.getInt(1),
-                                well.name()
+                                wellEntity.name()
                         );
                     }
-                    throw new SQLException("Creating well failed");
+                    throw new SQLException("Creating wellEntity failed");
                 }
             } catch (SQLException ex) {
                 connection.rollback();
-                LOG.error("An error occurred while executing a request to save well", ex);
+                LOG.error("An error occurred while executing a request to save wellEntity", ex);
                 throw ex;
             }
         });
     }
 
     @Override
-    public List<Well> findAll() {
+    public List<WellEntity> findAll() {
         return database.execute(connection -> {
             try (PreparedStatement statement = connection.prepareStatement("""
                             SELECT id AS well_id, name AS well_name FROM well
                      """)) {
                 var resultSet = statement.executeQuery();
-                var wells = new LinkedList<Well>();
+                var wells = new LinkedList<WellEntity>();
                 while (resultSet.next()) {
-                    var well = new Well(
+                    var wellEntity = new WellEntity(
                             resultSet.getInt("well_id"),
                             resultSet.getString("well_name")
                     );
-                    wells.add(well);
+                    wells.add(wellEntity);
                 }
                 return wells;
             }
@@ -67,7 +67,7 @@ public class WellRepository implements Repository<Integer, Well> {
     }
 
     @Override
-    public Well findById(Integer wellId) {
+    public WellEntity findById(Integer wellId) {
         return database.execute(connection -> {
             try (PreparedStatement statement = connection.prepareStatement("""
                             SELECT id AS well_id, name AS well_name
@@ -77,13 +77,13 @@ public class WellRepository implements Repository<Integer, Well> {
                 statement.setInt(1, wellId);
                 var resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    return new Well(
+                    return new WellEntity(
                             resultSet.getInt("well_id"),
                             resultSet.getString("well_name")
                     );
                 }
-                LOG.debug("Failed to find well with id {}", wellId);
-                throw new SQLException("Failed to find well");
+                LOG.debug("Failed to find wellEntity with id {}", wellId);
+                throw new SQLException("Failed to find wellEntity");
             }
         });
     }

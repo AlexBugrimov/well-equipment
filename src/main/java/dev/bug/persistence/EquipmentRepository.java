@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EquipmentRepository implements Repository<Integer, Equipment> {
+public class EquipmentRepository implements Repository<Integer, EquipmentEntity> {
 
     private static final Logger LOG = LogManager.getLogger(EquipmentRepository.class);
 
@@ -20,35 +20,35 @@ public class EquipmentRepository implements Repository<Integer, Equipment> {
     }
 
     @Override
-    public Equipment save(Equipment equipment) {
+    public EquipmentEntity save(EquipmentEntity equipmentEntity) {
         return database.execute(connection -> {
             try (PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO equipment (name, well_id) VALUES (?, ?)
                 """, Statement.RETURN_GENERATED_KEYS)) {
                 connection.setAutoCommit(false);
-                statement.setString(1, equipment.name());
-                statement.setInt(2, equipment.well().id());
+                statement.setString(1, equipmentEntity.name());
+                statement.setInt(2, equipmentEntity.wellEntity().id());
                 statement.executeUpdate();
                 try (var generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         connection.commit();
-                        return new Equipment(
+                        return new EquipmentEntity(
                                 generatedKeys.getInt(1),
-                                equipment.name(),
-                                equipment.well());
+                                equipmentEntity.name(),
+                                equipmentEntity.wellEntity());
                     }
-                    throw new SQLException("Creating equipment failed");
+                    throw new SQLException("Creating equipmentEntity failed");
                 }
             } catch (SQLException ex) {
                 connection.rollback();
-                LOG.error("An error occurred while executing a request to save equipment", ex);
+                LOG.error("An error occurred while executing a request to save equipmentEntity", ex);
                 throw ex;
             }
         });
     }
 
     @Override
-    public List<Equipment> findAll() {
+    public List<EquipmentEntity> findAll() {
         return database.execute(connection -> {
             try (PreparedStatement statement = connection.prepareStatement("""
                             SELECT
@@ -60,16 +60,16 @@ public class EquipmentRepository implements Repository<Integer, Equipment> {
                             LEFT JOIN well we on we.id = eq.well_id
                             """)) {
                 var resultSet = statement.executeQuery();
-                var equipments = new LinkedList<Equipment>();
+                var equipments = new LinkedList<EquipmentEntity>();
                 while (resultSet.next()) {
                     var wellId = resultSet.getInt("well_id");
                     var wellName = resultSet.getString("well_name");
                     var equipmentId = resultSet.getInt("eq_id");
                     var equipmentName = resultSet.getString("eq_name");
 
-                    var well = new Well(wellId, wellName);
-                    var equipment = new Equipment(equipmentId, equipmentName, well);
-                    equipments.add(equipment);
+                    var wellEntity = new WellEntity(wellId, wellName);
+                    var equipmentEntity = new EquipmentEntity(equipmentId, equipmentName, wellEntity);
+                    equipments.add(equipmentEntity);
                 }
                 return equipments;
             }
@@ -77,7 +77,7 @@ public class EquipmentRepository implements Repository<Integer, Equipment> {
     }
 
     @Override
-    public Equipment findById(Integer equipmentId) {
+    public EquipmentEntity findById(Integer equipmentId) {
         return database.execute(connection -> {
             try (PreparedStatement statement = connection.prepareStatement("""
                             SELECT
@@ -92,18 +92,18 @@ public class EquipmentRepository implements Repository<Integer, Equipment> {
                 statement.setInt(1, equipmentId);
                 var resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    var well = new Well(
+                    var wellEntity = new WellEntity(
                             resultSet.getInt("well_id"),
                             resultSet.getString("well_name")
                     );
-                    return new Equipment(
+                    return new EquipmentEntity(
                             resultSet.getInt("eq_id"),
                             resultSet.getString("eq_name"),
-                            well
+                            wellEntity
                     );
                 }
-                LOG.debug("Failed to find equipment with id {}", equipmentId);
-                throw new SQLException("Failed to find equipment");
+                LOG.debug("Failed to find equipmentEntity with id {}", equipmentId);
+                throw new SQLException("Failed to find equipmentEntity");
             }
         });
     }
