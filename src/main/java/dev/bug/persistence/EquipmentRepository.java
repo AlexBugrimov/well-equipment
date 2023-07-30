@@ -3,13 +3,15 @@ package dev.bug.persistence;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 public class EquipmentRepository implements Repository<Integer, Equipment> {
 
-    private final static Logger LOG = LogManager.getLogger(EquipmentRepository.class);
+    private static final Logger LOG = LogManager.getLogger(EquipmentRepository.class);
 
     private final Database database;
 

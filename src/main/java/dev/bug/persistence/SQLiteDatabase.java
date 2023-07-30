@@ -5,11 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class SQLiteDatabase extends Database {
 
-    private final static Logger LOG = LogManager.getLogger(SQLiteDatabase.class);
+    private static final Logger LOG = LogManager.getLogger(SQLiteDatabase.class);
 
     private final SQLiteConfig config;
 

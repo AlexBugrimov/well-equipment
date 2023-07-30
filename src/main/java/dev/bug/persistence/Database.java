@@ -15,12 +15,12 @@ import static java.util.stream.Collectors.joining;
 
 public abstract class Database {
 
-    private final static Logger LOG = LogManager.getLogger(SQLiteDatabase.class);
+    private static final Logger LOG = LogManager.getLogger(SQLiteDatabase.class);
 
     protected abstract Connection connection();
 
     public <R> R execute(SqlExecuteQuery<R> executeQuery) {
-        try(var connection = connection()) {
+        try (var connection = connection()) {
             return executeQuery.accept(connection);
         } catch (SQLException ex) {
             LOG.error("Failed to execute SQL query", ex);
@@ -46,7 +46,7 @@ public abstract class Database {
     }
 
     private void executeSqlFile(Statement statement, String filePath) throws SQLException {
-        try(var fileReader = new FileReader(filePath);
+        try (var fileReader = new FileReader(filePath);
             var bufferedReader = new BufferedReader(fileReader)) {
             var sqlScript = bufferedReader
                     .lines()

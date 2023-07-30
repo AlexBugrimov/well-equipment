@@ -11,7 +11,7 @@ import java.util.List;
 
 public class WellRepository implements Repository<Integer, Well> {
 
-    private final static Logger LOG = LogManager.getLogger(WellRepository.class);
+    private static final Logger LOG = LogManager.getLogger(WellRepository.class);
 
     private final Database database;
 
