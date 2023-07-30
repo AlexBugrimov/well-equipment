@@ -35,10 +35,12 @@ public class EquipmentRepository implements Repository<Integer, Equipment> {
                                 equipment.name(),
                                 equipment.well());
                     }
-                    connection.rollback();
-                    LOG.error("An error occurred while executing a request to save equipment");
                     throw new SQLException("Creating equipment failed");
                 }
+            } catch (SQLException ex) {
+                connection.rollback();
+                LOG.error("An error occurred while executing a request to save equipment", ex);
+                throw ex;
             }
         });
     }

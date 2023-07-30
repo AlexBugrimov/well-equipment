@@ -19,15 +19,6 @@ public abstract class Database {
 
     protected abstract Connection connection();
 
-    public void execute(SqlExecute execute) {
-        try(var connection = connection()) {
-            execute.accept(connection);
-        } catch (SQLException ex) {
-            LOG.error("Failed to execute SQL query", ex);
-            throw new IllegalStateException("Failed to execute SQL query", ex);
-        }
-    }
-
     public <R> R execute(SqlExecuteQuery<R> executeQuery) {
         try(var connection = connection()) {
             return executeQuery.accept(connection);

@@ -2,8 +2,6 @@ package dev.bug;
 
 import dev.bug.persistence.*;
 
-import java.util.List;
-
 /**
  * Main class
  */
