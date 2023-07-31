@@ -15,8 +15,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EquipmentRepository
-        implements Repository<Integer, EquipmentEntity>, EquipmentPersistence {
+public class EquipmentRepository implements Repository<Integer, EquipmentEntity>, EquipmentPersistence {
 
     private static final Logger LOG = LogManager.getLogger(EquipmentRepository.class);
 

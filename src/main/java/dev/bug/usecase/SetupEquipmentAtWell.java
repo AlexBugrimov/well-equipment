@@ -5,5 +5,5 @@ import dev.bug.domain.WellName;
 
 public interface SetupEquipmentAtWell {
 
-    void setUpEquipment(Count count, WellName wellName);
+    void execute(Count count, WellName wellName);
 }

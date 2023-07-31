@@ -8,7 +8,7 @@ import dev.bug.usecase.access.EquipmentPersistence;
 public record SetupEquipmentAtWellUseCase(EquipmentPersistence equipmentPersistence) implements SetupEquipmentAtWell {
 
     @Override
-    public void setUpEquipment(Count count, WellName wellName) {
+    public void execute(Count count, WellName wellName) {
         equipmentPersistence.setupEquipment(count, wellName);
     }
 }
