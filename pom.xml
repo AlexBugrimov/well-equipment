@@ -27,6 +27,7 @@
         <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
         <junit-jupiter.version>5.9.2</junit-jupiter.version>
         <assertj-core.version>3.24.2</assertj-core.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -78,6 +79,11 @@
             </testResource>
         </testResources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
