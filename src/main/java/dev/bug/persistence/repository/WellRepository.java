@@ -1,5 +1,7 @@
-package dev.bug.persistence;
+package dev.bug.persistence.repository;
 
+import dev.bug.persistence.Database;
+import dev.bug.persistence.model.WellEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

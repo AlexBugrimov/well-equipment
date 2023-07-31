@@ -1,8 +1,8 @@
 package dev.bug;
 
-import dev.bug.persistence.EquipmentRepository;
+import dev.bug.persistence.repository.EquipmentRepository;
 import dev.bug.persistence.SQLiteDatabase;
-import dev.bug.persistence.WellRepository;
+import dev.bug.persistence.repository.WellRepository;
 
 /**
  * Main class
