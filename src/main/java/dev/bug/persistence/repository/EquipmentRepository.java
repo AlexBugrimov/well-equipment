@@ -1,5 +1,11 @@
-package dev.bug.persistence;
+package dev.bug.persistence.repository;
 
+import dev.bug.domain.Count;
+import dev.bug.domain.WellName;
+import dev.bug.persistence.Database;
+import dev.bug.persistence.model.EquipmentEntity;
+import dev.bug.persistence.model.WellEntity;
+import dev.bug.usecase.access.EquipmentPersistence;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,7 +15,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EquipmentRepository implements Repository<Integer, EquipmentEntity> {
+public class EquipmentRepository
+        implements Repository<Integer, EquipmentEntity>, EquipmentPersistence {
 
     private static final Logger LOG = LogManager.getLogger(EquipmentRepository.class);
 
@@ -106,5 +113,11 @@ public class EquipmentRepository implements Repository<Integer, EquipmentEntity>
                 throw new SQLException("Failed to find equipmentEntity");
             }
         });
+    }
+
+    @Override
+    public void setupEquipment(Count count, WellName wellName) {
+
+
     }
 }

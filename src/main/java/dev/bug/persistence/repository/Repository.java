@@ -1,4 +1,4 @@
-package dev.bug.persistence;
+package dev.bug.persistence.repository;
 
 import java.util.List;
 
