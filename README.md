@@ -1,4 +1,4 @@
-[![Check Style](https://github.com/AlexBugrimov/wellEntity-equipmentEntity/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/AlexBugrimov/wellEntity-equipmentEntity/actions/workflows/checkstyle.yml)
+[![Check formatting and coding standards](https://github.com/AlexBugrimov/well-equipment/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/AlexBugrimov/well-equipment/actions/workflows/checkstyle.yml)
 
 # Оборудование на скважинах
 
