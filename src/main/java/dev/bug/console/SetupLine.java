@@ -14,7 +14,7 @@ public record SetupLine(Count count, WellName wellName) implements InputLine {
     }
 
     public static SetupLine of(String[] split) {
-        assert isSizeTwo(split) : "Количество параметров должно соответствовать 2-м";
+        assert isSizeTwo(split) : "Размер массива должен быть равен 2-м";
         return of(split[0], split[1]);
     }
 

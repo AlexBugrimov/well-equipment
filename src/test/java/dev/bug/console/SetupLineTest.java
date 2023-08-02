@@ -35,6 +35,6 @@ class SetupLineTest {
     void shouldReturnErrorIfNumberOfParamsAreNotTwo() {
         assertThatThrownBy(() -> SetupLine.of(new String[]{"1"}))
                 .isInstanceOf(AssertionError.class)
-                .hasMessage("Количество параметров должно соответствовать 2-м");
+                .hasMessage("Размер массива должен быть равен 2-м");
     }
 }
