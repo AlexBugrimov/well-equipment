@@ -4,9 +4,6 @@ import dev.bug.domain.Count;
 import dev.bug.domain.WellName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -20,18 +17,20 @@ class SetupEquipmentParameterExtractorTest {
         parameterExtractor = new SetupEquipmentParameterExtractor();
     }
 
-    @ParameterizedTest
-    @CsvSource({"2 , Command line '2' is not correct", " Some_Name, Command line 'Some_Name' is not correct"})
-    void shouldErrorIfParamIsOne(String inputLine, String errorMessage) {
-        assertThatThrownBy(() -> parameterExtractor.extract(inputLine))
-                .isInstanceOf(AssertionError.class)
-                .hasMessageContaining(errorMessage);
+    @Test
+    void shouldReturnSetupLineWithCountAndWellName() {
+        var count = new Count(1000);
+        var wellName = new WellName("Some_well_name");
+        var inputLine = parameterExtractor.extract("%s %s".formatted(count.value(), wellName.value()));
+
+        assertThat(inputLine.count()).isEqualTo(count);
+        assertThat(inputLine.wellName()).isEqualTo(wellName);
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    void shouldErrorIfParamIsNullOrEmpty(String inputLine) {
-        assertThatThrownBy(() -> parameterExtractor.extract(inputLine))
-                .isInstanceOf(AssertionError.class);
+    @Test
+    void shouldErrorIfInputIsNull() {
+        assertThatThrownBy(() -> parameterExtractor.extract(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Command line 'null' is not correct");
     }
 }
