@@ -1,4 +1,4 @@
-name: Check formatting and coding standards
+name: CheckStyle
 
 on:
   push:
