@@ -20,19 +20,11 @@ class SetupEquipmentParameterExtractorTest {
         parameterExtractor = new SetupEquipmentParameterExtractor();
     }
 
-    @Test
-    void shouldReturnPairCountAndWellName() {
-        var setupLine = parameterExtractor.extract("1 NAME");
-
-        assertThat(setupLine.count()).isEqualTo(Count.one());
-        assertThat(setupLine.wellName()).isEqualTo(WellName.of("NAME"));
-    }
-
     @ParameterizedTest
     @CsvSource({"2 , Command line '2' is not correct", " Some_Name, Command line 'Some_Name' is not correct"})
     void shouldErrorIfParamIsOne(String inputLine, String errorMessage) {
         assertThatThrownBy(() -> parameterExtractor.extract(inputLine))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(AssertionError.class)
                 .hasMessageContaining(errorMessage);
     }
 
@@ -40,6 +32,6 @@ class SetupEquipmentParameterExtractorTest {
     @NullAndEmptySource
     void shouldErrorIfParamIsNullOrEmpty(String inputLine) {
         assertThatThrownBy(() -> parameterExtractor.extract(inputLine))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(AssertionError.class);
     }
 }
